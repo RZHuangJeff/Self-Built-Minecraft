@@ -17,11 +17,11 @@ public class StartLayer extends Layer{
     }
 
     public void update(float interval){
-
+        
     }
 
     public void render(Window window){
         window.clear();
-        window.setClearColor(0.0f, 1.0f, 0.0f, 1.0f);
+        window.setClearColor(0.0f, 0.5f, 0.0f, 1.0f);
     }
 }
