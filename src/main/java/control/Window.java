@@ -40,11 +40,18 @@ public class Window {
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
+        boolean maximized = false;
+        if(width == 0 && height == 0){
+            width = 100;
+            height = 100;
+            glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+            maximized = true;
+        }
+
         // Create the window
         handle = glfwCreateWindow(width, height, title, NULL, NULL);
-        if (handle == NULL) {
+        if (handle == NULL)
             throw new RuntimeException("Failed to create the GLFW window");
-        }
 
         // Setup resize callback
         glfwSetFramebufferSizeCallback(handle, (window, width, height) -> {
@@ -52,33 +59,34 @@ public class Window {
             this.height = height;
             this.setResized(true);
         });
-
-        // Setup a key callback. It will be called every time a key is pressed, repeated or released.
-        glfwSetKeyCallback(handle, (window, key, scancode, action, mods) -> {
-            if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
-                glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
-            }
-        });
-
         
-        GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-        glfwSetWindowPos(
-                handle,
-                (vidmode.width() - width) / 2,
-                (vidmode.height() - height) / 2
-        );
+        if(maximized)
+            glfwMaximizeWindow(handle);
+        else{
+            GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+            glfwSetWindowPos(
+                    handle,
+                    (vidmode.width() - width) / 2,
+                    (vidmode.height() - height) / 2
+            );
+        }
 
         glfwMakeContextCurrent(handle);
-
+        glfwShowWindow(handle);
         if (isvSync()) {
             glfwSwapInterval(1);
         }
 
-        glfwShowWindow(handle);
-
         GL.createCapabilities();
-
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    }
+
+    public void clear(){
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
+
+    public long getHandle(){
+        return handle;
     }
 
     public void setClearColor(float r, float g, float b, float a){
@@ -89,16 +97,20 @@ public class Window {
         return glfwGetKey(handle, keyCode) == GLFW_PRESS;
     }
 
-    public boolean windowShouldClose() {
-        return glfwWindowShouldClose(handle);
-    }
-
     public boolean isResized() {
         return resized;
     }
 
     public void setResized(boolean resized) {
         this.resized = resized;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public boolean isvSync() {
