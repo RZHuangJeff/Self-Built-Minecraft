@@ -4,7 +4,7 @@ import display.*;
 public class Main {
     public static void main(String[] args) {
         try {
-            Window window = new Window("Minecraft", 600, 480, true);
+            Window window = new Window("Minecraft", 0, 0, true);
             
             Layer start = new StartLayer();
             LayerController lController = new LayerController(start);
