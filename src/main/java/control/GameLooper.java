@@ -1,22 +1,22 @@
 package control;
 
-import java.util.ArrayList;
-
-import display.*;
-
-public class GameLoopingController implements Runnable{
+public class GameLooper implements Runnable{
     public static final int fps = 75;
     public static final int ups = 30;
 
     private final Window window;
     private final Timer timer;
+    private final LayerController layerController;
 
-    private ArrayList<Frame> frameList;
+    private final KeyboardInput keyboard;
+    private final MouseInput mouse;
 
-    public GameLoopingController(Window window){
+    public GameLooper(Window window, LayerController layerController){
         this.window = window;
         this.timer = new Timer();
-        this.frameList = new ArrayList<>();
+        this.layerController = layerController;
+        this.keyboard = new KeyboardInput(window);
+        this.mouse = new MouseInput(window);
     }
 
     public void run(){
@@ -31,6 +31,8 @@ public class GameLoopingController implements Runnable{
     private void init() throws Exception{
         window.init();
         timer.init();
+        mouse.init();
+        layerController.init();
     }
 
     private void startLooping(){
@@ -38,14 +40,14 @@ public class GameLoopingController implements Runnable{
         float accumulator = 0f;
         float interval = 1f/ups;
 
-        while (frameList.size() != 0 && !window.windowShouldClose()) {
+        while (!layerController.isEmpty()) {
             elapsedTime = timer.getElapsedTime();
             accumulator += elapsedTime; 
 
             handleInput();
 
             while(accumulator >= interval){
-                update();
+                update(interval);
                 accumulator -= interval;
             }
 
@@ -54,23 +56,16 @@ public class GameLoopingController implements Runnable{
     }
 
     private void handleInput(){
-        frameList.get(frameList.size() - 1).input();
+        mouse.input();
+        layerController.input(keyboard, mouse);
     }
 
-    private void update(){
-        frameList.get(frameList.size() - 1).update();
+    private void update(float interval){
+        layerController.update(interval);
     }
 
     private void render(){
-        frameList.get(frameList.size() - 1).render();
+        layerController.render(window);
         window.update();
-    }
-
-    public void addFrame(Frame frame){
-        frameList.add(frame);
-    }
-
-    public void removeLastFrame(){
-        frameList.remove(frameList.size() - 1);
     }
 }

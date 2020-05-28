@@ -1,14 +1,16 @@
 import control.*;
 import display.*;
-import layout.*;
 
 public class Main {
     public static void main(String[] args) {
         try {
             Window window = new Window("Minecraft", 600, 480, true);
-            GameLoopingController controller = new GameLoopingController(window);
-            Frame startFrame = new StartFrame(window, controller);
-            controller.addFrame(startFrame);
+            
+            Layer start = new StartLayer();
+            LayerController lController = new LayerController(start);
+            start.setLayerController(lController);
+
+            GameLooper controller = new GameLooper(window, lController);
             controller.run();
         } catch (Exception e) {
             e.printStackTrace();
