@@ -2,8 +2,6 @@ package control;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-import java.util.Arrays;
-
 import org.joml.Vector2f;
 
 public class MouseInput {

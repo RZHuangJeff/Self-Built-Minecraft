@@ -2,8 +2,6 @@ package graphic;
 
 import java.util.ArrayList;
 
-import org.joml.Matrix4f;
-
 import control.MatrixGenerator;
 import control.Utils;
 import control.Window;

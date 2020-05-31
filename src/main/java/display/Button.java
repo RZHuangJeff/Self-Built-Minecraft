@@ -2,7 +2,6 @@ package display;
 
 import control.TexturePack;
 import graphic.Mesh;
-import graphic.Texture;
 
 public class Button extends Controller{
     private final float[] defaultTextCoord = new float[]{
