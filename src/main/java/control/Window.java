@@ -7,6 +7,8 @@ import org.lwjgl.opengl.GL;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
+import org.joml.Matrix4f;
+
 public class Window {
     private final String title;
     
@@ -15,7 +17,6 @@ public class Window {
 
     private long handle;
 
-    private boolean resized;
     private boolean vSync;
 
     public Window(String title, int width, int height, boolean vSync){
@@ -23,7 +24,6 @@ public class Window {
         this.width = width;
         this.height = height;
         this.vSync = vSync;
-        this.resized = false;
     }
 
     public void init(){
@@ -57,9 +57,9 @@ public class Window {
         glfwSetFramebufferSizeCallback(handle, (window, width, height) -> {
             this.width = width;
             this.height = height;
-            this.setResized(true);
+            glViewport(0, 0, width, height);
         });
-        
+
         if(maximized)
             glfwMaximizeWindow(handle);
         else{
@@ -79,6 +79,17 @@ public class Window {
 
         GL.createCapabilities();
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    }
+
+    public void disableDepthTest(){
+        glDisable(GL_DEPTH_TEST);
+    }
+
+    public void enableDepthTest(){
+        glEnable(GL_DEPTH_TEST);
     }
 
     public void clear(){
@@ -97,12 +108,8 @@ public class Window {
         return glfwGetKey(handle, keyCode) == GLFW_PRESS;
     }
 
-    public boolean isResized() {
-        return resized;
-    }
-
-    public void setResized(boolean resized) {
-        this.resized = resized;
+    public boolean isKeyReleased(int keyCode){
+        return glfwGetKey(handle, keyCode) == GLFW_RELEASE;
     }
 
     public int getWidth() {

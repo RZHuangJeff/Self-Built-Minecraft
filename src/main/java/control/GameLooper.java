@@ -30,7 +30,9 @@ public class GameLooper implements Runnable{
 
     private void init() throws Exception{
         window.init();
+        TexturePack.init();
         timer.init();
+        keyboard.init();
         mouse.init();
         layerController.init();
     }

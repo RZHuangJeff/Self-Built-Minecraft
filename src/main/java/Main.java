@@ -1,14 +1,14 @@
 import control.*;
-import display.*;
+import display.layer.StartLayer;
 
 public class Main {
     public static void main(String[] args) {
         try {
             Window window = new Window("Minecraft", 0, 0, true);
             
-            Layer start = new StartLayer();
-            LayerController lController = new LayerController(start);
-            start.setLayerController(lController);
+            LayerController lController = new LayerController();
+            StartLayer start = new StartLayer(lController);
+            lController.addLayer(start);
 
             GameLooper controller = new GameLooper(window, lController);
             controller.run();

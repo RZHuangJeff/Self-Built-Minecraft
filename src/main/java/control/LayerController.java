@@ -2,19 +2,20 @@ package control;
 
 import java.util.ArrayList;
 
-import display.Layer;
+import display.layer.Layer;
 
 public class LayerController {
     private int lastLayerIndex;
     private final ArrayList<Layer> layers = new ArrayList<>();
 
-    public LayerController(Layer initialLayer){
-        layers.add(initialLayer);
-        lastLayerIndex = 0;
+    public LayerController(){
+        lastLayerIndex = -1;
     }
 
     public void init() throws Exception{
-        layers.get(0).init();
+        for (Layer layer : layers) {
+            layer.init();
+        }
     }
 
     public void addLayer(Layer newLayer){

@@ -1,14 +1,14 @@
-package display;
+package display.layer;
 
 import control.KeyboardInput;
 import control.LayerController;
 import control.MouseInput;
 import control.Window;
 
-abstract public class Layer {
+abstract public class Layer{
     protected LayerController controller;
 
-    public void setLayerController(LayerController controller){
+    public Layer(LayerController controller){
         this.controller = controller;
     }
     
