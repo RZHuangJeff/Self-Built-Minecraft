@@ -2,11 +2,6 @@ package control;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-import java.awt.MouseInfo;
-import java.nio.DoubleBuffer;
-
-import org.lwjgl.system.MemoryUtil;
-
 public class KeyboardInput {
     private final Window window;
 

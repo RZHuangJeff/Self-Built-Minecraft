@@ -2,10 +2,7 @@ package control;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-import java.nio.DoubleBuffer;
-
 import org.joml.Vector2f;
-import org.lwjgl.system.MemoryUtil;
 
 public class MouseInput {
     public static final int LEFT_KEY = 0;

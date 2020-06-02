@@ -7,7 +7,6 @@ import org.joml.Vector2f;
 import control.ItemInfo;
 import control.TextureInfo;
 import display.Image;
-import display.Label;
 
 public class BackpackPanel extends Panel{
     private Image background;
