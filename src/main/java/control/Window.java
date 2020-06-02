@@ -40,8 +40,8 @@ public class Window {
 
         boolean maximized = false;
         if(width == 0 && height == 0){
-            width = 100;
-            height = 100;
+            width = 1080;
+            height = 720;
             glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
             maximized = true;
         }

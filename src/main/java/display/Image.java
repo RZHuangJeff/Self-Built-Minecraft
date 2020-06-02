@@ -6,30 +6,20 @@ import graphic.Texture;
 
 public class Image extends Controller{
     private Texture texture;
+
+    public static float[] defaultTextCoord = new float[]{
+        0.0f, 0.0f,
+        0.0f, 1.0f,
+        1.0f, 1.0f,
+        1.0f, 0.0f
+    };
+
     public Image(String path){
         try {
-            texture = TexturePack.getTexture(path);
-            float[] vertices = new float[]{
-                0.0f, 0.0f, 0.0f,
-                0.0f, 1.0f, 0.0f,
-                1.0f, 1.0f, 0.0f,
-                1.0f, 0.0f, 0.0f
-            };
-            float[] textCoord = new float[]{
-                0.0f, 0.0f,
-                0.0f, 1.0f,
-                1.0f, 1.0f,
-                1.0f, 0.0f
-            };
-            byte[] indices = new byte[]{
-                0, 1, 3, 3, 1, 2
-            };
-
-            Mesh mesh = new Mesh(vertices, indices);
+            mesh = new Mesh(vertices, indices);
             mesh.setTexture(texture);
-            mesh.setTextCoord(textCoord);
-
-            setMesh(mesh);
+            mesh.setTexture(TexturePack.getTexture(path));
+            mesh.setTextCoord(defaultTextCoord);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,6 +32,6 @@ public class Image extends Controller{
             rbx, rby,
             rbx, lty
         };
-        getMesh().setTextCoord(textCoord);
+        mesh.setTextCoord(textCoord);
     }
 }

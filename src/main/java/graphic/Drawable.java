@@ -1,23 +1,19 @@
 package graphic;
 
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 public class Drawable {
-    private Mesh mesh;
-
     private final Vector3f position;
     private final Vector3f scale;
     private final Vector3f rotation;
+    private final Vector2f textOffset;
 
     public Drawable(){
         this.position = new Vector3f();
         this.rotation = new Vector3f();
+        this.textOffset = new Vector2f();
         this.scale = new Vector3f(1, 1, 1);
-    }
-
-    public Drawable(Mesh mesh){
-        this();
-        this.mesh = mesh;
     }
 
     public Vector3f getPosition(){
@@ -50,11 +46,12 @@ public class Drawable {
         this.rotation.z = z;
     }
 
-    public Mesh getMesh(){
-        return mesh;
+    public void setTextOffset(float x, float y){
+        this.textOffset.x = x;
+        this.textOffset.y = y;
     }
 
-    public void setMesh(Mesh m){
-        mesh = m;
+    public Vector2f getTextOffset(){
+        return textOffset;
     }
 }

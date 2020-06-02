@@ -7,13 +7,28 @@ import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import graphic.Drawable;
+import graphic.Mesh;
 
 public class Controller extends Drawable{
     public boolean visible = true;
+
+    protected Mesh mesh;
+
     private Vector4f colour = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
 
     private Controller parent = null;
     private ArrayList<Controller> children = new ArrayList<>();
+
+    public static float[] vertices = new float[]{
+        0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        1.0f, 1.0f, 0.0f,
+        1.0f, 0.0f, 0.0f
+    };
+
+    public static int indices[] = new int[]{
+        0, 1, 3, 3, 1, 2
+    };
 
     public void setPosition(float x, float y){
         setPosition(x, y, 0.0f);
@@ -49,6 +64,10 @@ public class Controller extends Drawable{
 
     public Vector4f getColour(){
         return colour;
+    }
+
+    public Mesh getMesh(){
+        return mesh;
     }
 
     public ArrayList<Controller> getChildren(){

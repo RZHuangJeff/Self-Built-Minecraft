@@ -102,7 +102,7 @@ public class Label extends Controller{
 
         float[] vArray = new float[vertices.size()];
         float[] tArray = new float[textCoords.size()];
-        byte[] iArray = new byte[indices.size()];
+        int[] iArray = new int[indices.size()];
 
         for(int i = 0; i < vArray.length; i++)
             vArray[i] = vertices.get(i);
@@ -113,11 +113,9 @@ public class Label extends Controller{
         for(int i = 0; i < iArray.length; i++)
             iArray[i] = indices.get(i).byteValue();
 
-        Mesh mesh = new Mesh(vArray, iArray);
+        mesh = new Mesh(vArray, iArray);
         mesh.setTextCoord(tArray);
         mesh.setTexture(font);
-
-        this.setMesh(mesh);
 
         width = w;
     }

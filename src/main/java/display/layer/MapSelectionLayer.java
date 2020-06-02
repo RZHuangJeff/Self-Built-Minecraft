@@ -147,6 +147,7 @@ public class MapSelectionLayer extends Layer{
         }
 
         if(selectBtn.isHover(cursorPos) && mouse.isKeyPressed(MouseInput.LEFT_KEY)){
+            mouse.disableCursor();
             try {
                 Layer nextLayer = new GameLayer(controller, renderer);
                 nextLayer.init();
@@ -193,7 +194,8 @@ public class MapSelectionLayer extends Layer{
     public void render(Window window){
         window.clear();
         window.setClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        renderer.render(null, null, controllers);
+        
+        renderer.render(controllers);
     }
 
     private void loadMap(){

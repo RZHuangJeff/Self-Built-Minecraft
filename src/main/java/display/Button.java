@@ -21,39 +21,22 @@ public class Button extends Controller{
     private Label text;
 
     public Button(){
-        float[] vertices = new float[]{
-            0.0f, 0.0f, 0.0f,
-            0.0f, 1.0f, 0.0f,
-            1.0f, 1.0f, 0.0f,
-            1.0f, 0.0f, 0.0f
-        };
-        byte indices[] = new byte[]{
-            0, 1, 3, 3, 1, 2
-        };
-
-        setMesh(new Mesh(vertices, indices));
-        getMesh().setTexture(TexturePack.getTexture("widgets"));
+        mesh = new Mesh(vertices, indices);
+        mesh.setTexture(TexturePack.getTexture("widgets"));
         unSelect();
     }
 
     public void select(){
-        this.getMesh().setTextCoord(selectTextCoord);
+        mesh.setTextCoord(selectTextCoord);
     }
 
     public void unSelect(){
-        this.getMesh().setTextCoord(defaultTextCoord);
+        mesh.setTextCoord(defaultTextCoord);
     }
 
-    /*public void setTexture(Texture texture){
-        this.getMesh().setTexture(texture);
-        this.getMesh().setTextCoord(defaultTextCoord);
-    }*/
-
     public void setText(String text){
-        if(this.text == null){
+        if(this.text == null)
             this.text = new Label();
-            setTextPosition(0, 0);
-        }
 
         this.text.setText(text);
         addController(this.text);

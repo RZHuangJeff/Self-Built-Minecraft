@@ -5,6 +5,7 @@ import display.Image;
 public class HudPanel extends Panel{
     private Image hud;
     private Image onHand;
+    private Image cursor;
 
     public HudPanel(){
         hud = new Image("widgets");
@@ -17,6 +18,12 @@ public class HudPanel extends Panel{
         onHand.setSize(100, 100);
         onHand.setTextCoord(0.01f, 0.09f, 0.086f, 0.172f);
         addController(onHand);
+
+        cursor = new Image("widgets");
+        cursor.setSize(50, 50);
+        cursor.setPosition(425, -440);
+        cursor.setTextCoord(0.95f, 0.0f, 1.0f, 0.05f);
+        addController(cursor);
 
         setFocus(0);
     }

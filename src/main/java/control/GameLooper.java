@@ -2,7 +2,7 @@ package control;
 
 public class GameLooper implements Runnable{
     public static final int fps = 75;
-    public static final int ups = 30;
+    public static final int ups = 60;
 
     private final Window window;
     private final Timer timer;
@@ -32,8 +32,8 @@ public class GameLooper implements Runnable{
         window.init();
         TexturePack.init();
         timer.init();
-        keyboard.init();
         mouse.init();
+        keyboard.init();
         layerController.init();
     }
 

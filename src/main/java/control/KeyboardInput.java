@@ -2,6 +2,11 @@ package control;
 
 import static org.lwjgl.glfw.GLFW.*;
 
+import java.awt.MouseInfo;
+import java.nio.DoubleBuffer;
+
+import org.lwjgl.system.MemoryUtil;
+
 public class KeyboardInput {
     private final Window window;
 
@@ -9,14 +14,17 @@ public class KeyboardInput {
     private int lastActionKey;
     private int lastAction;
 
+    private int key;
+    private int action;
+
     public KeyboardInput(Window window){
         this.window = window;
     }
 
     public void init(){
         glfwSetKeyCallback(window.getHandle(), (window, key, scancode, action, mods) -> {
-            lastActionKey = key;
-            lastAction = action;
+            this.key = key;
+            this.action = action;
             hasGet = false;
         });
     }
@@ -24,15 +32,15 @@ public class KeyboardInput {
     public String getLastActionKey(){
         String value = "";
         if(!hasGet && 
-            (Character.isLetterOrDigit(lastActionKey) || Character.isWhitespace(lastActionKey)))
-            value = Character.toString(lastActionKey);
+            (Character.isLetterOrDigit(key) || Character.isWhitespace(key)))
+            value = Character.toString(key);
 
         hasGet = true;
         return value;
     }
 
     public int getLastAction(){
-        return lastAction;
+        return action;
     }
 
     public boolean isLastKeyGetted(){
@@ -40,22 +48,35 @@ public class KeyboardInput {
     }
 
     public boolean isKeyPressed(int keyCode){
-        if(lastActionKey == keyCode && lastAction == GLFW_PRESS){
-            lastActionKey = -1;
-            return true;
+        boolean isPressed = glfwGetKey(window.getHandle(), keyCode) == GLFW_PRESS;
+        if(isPressed){
+            if(lastAction != GLFW_PRESS){
+                lastActionKey = keyCode;
+                lastAction = GLFW_PRESS;
+                return true;
+            }
+        }else if(keyCode == lastActionKey){
+            lastAction = -1;
         }
         return false;
     }
 
     public boolean isKeyHold(int keyCode){
-        return lastActionKey == keyCode && (lastAction == GLFW_PRESS || lastAction == GLFW_REPEAT);
+        return glfwGetKey(window.getHandle(), keyCode) == GLFW_PRESS;
     }
 
     public boolean isKeyReleased(int keyCode){
-        if(lastActionKey == keyCode && lastAction == GLFW_PRESS){
-            lastActionKey = -1;
-            return true;
+        boolean isKeyReleased = glfwGetKey(window.getHandle(), keyCode) == GLFW_RELEASE;
+        if(isKeyReleased){
+            if(lastAction != GLFW_RELEASE){
+                lastActionKey = keyCode;
+                lastAction = GLFW_RELEASE;
+                return true;
+            }
+        }else if(keyCode == lastActionKey){
+            lastAction = -1;
         }
+            
         return false;
     }
 }

@@ -147,6 +147,6 @@ public class NewMapLayer extends Layer{
         window.clear();
         window.setClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-        renderer.render(null, null, controllers);
+        renderer.render(controllers);
     }
 }

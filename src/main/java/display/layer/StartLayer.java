@@ -41,6 +41,7 @@ public class StartLayer extends Layer{
         renderer.init();
 
         skybox = new Skybox();
+
         for(int i = 0; i < 2; i++){
             title[i] = new Image("minecraft");
             title[i].setPosition(510 + 500*i, 250);
@@ -106,13 +107,13 @@ public class StartLayer extends Layer{
 
     public void update(float interval){
         skybox.setRotation(0.2f, rotate, 0.0f);
-        rotate += 0.005f;
+        rotate += 0.0025f;
     }
 
     public void render(Window window){
         window.clear();
 
-        window.setClearColor(0.6f, 0.298f, 0.0f, 1.0f);
-        renderer.render(skybox, null, controllers);
+        renderer.render(skybox);
+        renderer.render(controllers);
     }
 }
