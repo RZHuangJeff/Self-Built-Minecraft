@@ -7,6 +7,7 @@ import java.util.Random;
 
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 import control.CameraPicker;
 import control.ItemInfo;
@@ -83,7 +84,11 @@ public class GameLayer extends Layer{
                 mouse.disableCursor();
         }
 
-        if(!backpack.visible){
+        if(backpack.visible){
+            Vector4f result = backpack.input(mouse);
+            if(result.x != -1)
+                System.out.println(result);
+        }else{
             for(int i = 0; i < 9; i++){
                 if(keyboard.isKeyPressed(GLFW_KEY_1 + i))
                     hud.setFocus(i);
@@ -145,8 +150,7 @@ public class GameLayer extends Layer{
             Vector3f pos = picked.getPosition();
             pick.setPosition(pos.x, -4, pos.z);
         }
-        else
-            System.out.println("null");
+            //System.out.println("null");
     }
 
     public void render(Window window){
