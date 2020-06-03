@@ -15,11 +15,21 @@ public class CameraPicker {
         float closestDistance = 6f;
 
         Vector3f dir = new Vector3f();
+        Vector3f ori = camera.getPosition();
         Vector3f min = new Vector3f();
         Vector3f max = new Vector3f();
         Vector2f result = new Vector2f();
         dir = MatrixGenerator.getViewMatrix(camera).positiveZ(dir).negate();
+
         for (Cube cube : cubes) {
+            Vector3f pos = new Vector3f(cube.getPosition());
+            pos = pos.negate();
+            pos = pos.add(ori);
+            pos = pos.absolute();
+
+            if(pos.x + pos.y + pos.z > 3*closestDistance) 
+                continue;
+            
             min.set(cube.getPosition());
             max.set(cube.getPosition());
 

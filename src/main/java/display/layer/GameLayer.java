@@ -14,6 +14,7 @@ import control.ItemInfo;
 import control.KeyboardInput;
 import control.LayerController;
 import control.MouseInput;
+import control.TextureInfo;
 import control.Window;
 import display.Controller;
 import display.Cube;
@@ -56,17 +57,19 @@ public class GameLayer extends Layer{
         controllers.add(backpack);
 
         Random random = new Random();
-        for(int i = 0; i < 5; i++)
-            for(int j = 0; j < 5; j++){
+        for(int i = 0; i < 100; i++)
+            for(int j = 0; j < 100; j++){
                 Cube cube = new Cube();
                 cube.setPosition(-2 + 2*i, -3, 2 - 2*j);
-                cube.setTextOffset(random.nextInt(3), 0);
+                Vector2f toff = TextureInfo.getCubeTextureOffset(random.nextInt(59));
+                cube.setTextOffset(toff.x, toff.y);
                 scene.addCube(cube);
             }
 
         pick = new Cube();
-        pick.setPosition(0, -4, 0);
-        pick.setTextOffset(0, 0);
+        pick.setPosition(0, 0, 0);
+        pick.setTextOffset(3, 2);
+        pick.setScale(1.01f, 1.01f, 1.01f);
         scene.addCube(pick);
     }
 
@@ -86,8 +89,7 @@ public class GameLayer extends Layer{
 
         if(backpack.visible){
             Vector4f result = backpack.input(mouse);
-            if(result.x != -1)
-                System.out.println(result);
+            //you can get the result of click here.
         }else{
             for(int i = 0; i < 9; i++){
                 if(keyboard.isKeyPressed(GLFW_KEY_1 + i))
@@ -136,21 +138,23 @@ public class GameLayer extends Layer{
     }
 
     public void update(float interval){
-        ItemInfo info = new ItemInfo();
-        info.itemId = 260;
-        info.position = new Vector3f(0, 2, 0);
         ArrayList<ItemInfo> items = new ArrayList<>();
-        items.add(info);
+        // make items as list of items in hud.
 
         if(backpack.visible)
             backpack.update(items);
 
+        if(hud.visible)
+            hud.update(items);
+
         Cube picked = CameraPicker.cameraPick(scene.getCubeList(), camera);
+        if(picked == null)
+            picked = CameraPicker.cameraPick(scene.getGlasses(), camera);
+
         if(picked != null){
             Vector3f pos = picked.getPosition();
-            pick.setPosition(pos.x, -4, pos.z);
+            pick.setPosition(pos.x, pos.y, pos.z);
         }
-            //System.out.println("null");
     }
 
     public void render(Window window){

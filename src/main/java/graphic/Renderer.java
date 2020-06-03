@@ -70,6 +70,7 @@ public class Renderer {
         instancedShader.setUniform("texture_sampler", 0);
 
         mesh.render(scene.getCubeList());
+        mesh.render(scene.getGlasses());
 
         instancedShader.unbind();
     }

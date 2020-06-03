@@ -9,6 +9,7 @@ import graphic.InstancedMesh;
 public class Scene{
     private InstancedMesh mesh;
     private ArrayList<Cube> cubes;
+    private ArrayList<Cube> glasses;
 
     public Scene(){
         mesh = new InstancedMesh(Cube.vertices, Cube.indices, 65536);
@@ -16,6 +17,7 @@ public class Scene{
         mesh.setTextCoord(Cube.textCoord);
 
         cubes = new ArrayList<>();
+        glasses = new ArrayList<>();
     }
 
     public void setTexture(String name){
@@ -23,7 +25,10 @@ public class Scene{
     }
 
     public void addCube(Cube cube){
-        cubes.add(cube);
+        if(cube.getTextOffset().equals(TextureInfo.getCubeTextureOffset(TextureInfo.GLASS)))
+            glasses.add(cube);
+        else
+            cubes.add(cube);
     }
 
     public void clearCubeList(){
@@ -36,5 +41,9 @@ public class Scene{
 
     public ArrayList<Cube> getCubeList(){
         return cubes;
+    }
+
+    public ArrayList<Cube> getGlasses(){
+        return glasses;
     }
 }

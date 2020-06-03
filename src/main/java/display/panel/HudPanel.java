@@ -2,7 +2,7 @@ package display.panel;
 
 import java.util.ArrayList;
 
-import org.joml.Vector2f;
+import org.joml.Vector4f;
 
 import control.ItemInfo;
 import control.TextureInfo;
@@ -13,7 +13,7 @@ public class HudPanel extends Panel{
     private Image onHand;
     private Image cursor;
 
-    private ItemPanel[] items = new ItemPanel[9];
+    private Image[] items = new Image[9];
 
     public HudPanel(){
         hud = new Image("widgets");
@@ -29,8 +29,10 @@ public class HudPanel extends Panel{
         addController(cursor);
 
         for(int i = 0; i < 9; i++){
-            items[i] = new ItemPanel();
-            items[i].setPosition(15 + i*99f, 10);
+            items[i] = new Image("unit1");
+            items[i].setSize(70, 70);
+            items[i].setTextCoord(0, 0, 0.0625f, 0.1667f);
+            items[i].setPosition(19 + i*99f, 14);
             addController(items[i]);
         }
 
@@ -43,14 +45,13 @@ public class HudPanel extends Panel{
     }
 
     public void update(ArrayList<ItemInfo> inhud){
+        clear();
+
         for (ItemInfo item : inhud) {
-            Vector2f tOffset = TextureInfo.getItemTextureOffset(item.itemId);
-            tOffset.x /= TextureInfo.UNIT2_SEPERATION.x;
-            tOffset.y /= TextureInfo.UNIT2_SEPERATION.y;
+            Vector4f offs = TextureInfo.getItemTextureOffset(item.itemId);
 
             items[(int)item.position.y].visible = true;
-            items[(int)item.position.y].setTextCoord(tOffset.x, tOffset.y, TextureInfo.UNIT2_WIDTH, TextureInfo.UNIT2_HEIGHT);
-            items[(int)item.position.y].setCount(item.count);
+            items[(int)item.position.y].setTextCoord(offs.x, offs.y, offs.z, offs.w);
         }
     }
 
